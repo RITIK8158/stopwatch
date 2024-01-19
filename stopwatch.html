@@ -1,0 +1,176 @@
+<html>
+<head>
+<style>
+/* Define the style for the container element */
+.container {
+  width: 400px; /* Set the width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+  text-align: center; /* Align the text to the center */
+}
+
+/* Define the style for the title element */
+.title {
+  font-family: Arial, sans-serif; /* Set the font family of the title */
+  font-size: 32px; /* Set the font size of the title */
+  font-weight: bold; /* Make the title bold */
+  color: green; /* Set the font color of the title */
+  margin: 20px 0; /* Add some margin around the title */
+}
+
+/* Define the style for the time display element */
+.time-display {
+  font-family: Arial, sans-serif; /* Set the font family of the time display */
+  font-size: 48px; /* Set the font size of the time display */
+  color: black; /* Set the font color of the time display */
+  margin: 10px 0; /* Add some margin around the time display */
+}
+
+/* Define the style for the buttons element */
+.buttons {
+  display: flex; /* Use flexbox to align the buttons */
+  justify-content: space-between; /* Distribute the buttons evenly */
+  margin: 10px 0; /* Add some margin around the buttons */
+}
+
+/* Define the style for each button element */
+.button {
+  width: 100px; /* Set the width of each button */
+  height: 50px; /* Set the height of each button */
+  border: none; /* Remove the border from each button */
+  border-radius: 10px; /* Make the corners rounded for each button */
+  font-family: Arial, sans-serif; /* Set the font family of each button */
+  font-size: 20px; /* Set the font size of each button */
+  font-weight: bold; /* Make the text bold for each button */
+  color: white; /* Set the font color to white for each button */
+  cursor: pointer; /* Change the cursor to a pointer when hovering over each button */
+}
+
+/* Define the style for the start button */
+.start {
+  background-color: green; /* Set the background color to green for the start button */
+}
+
+/* Define the style for the stop button */
+.stop {
+  background-color: red; /* Set the background color to red for the stop button */
+}
+
+/* Define the style for the reset button */
+.reset {
+  background-color: blue; /* Set the background color to blue for the reset button */
+}
+</style>
+</head>
+<body>
+<!-- Create a container element that will hold the stopwatch elements -->
+<div class="container">
+  <!-- Create a title element that will display the name of the application -->
+  <h1 class="title">Stopwatch</h1>
+  <!-- Create a time display element that will display the elapsed time -->
+  <div class="time-display">
+    <span id="hours">00</span>: <!-- This span element will display the hours -->
+    <span id="minutes">00</span>: <!-- This span element will display the minutes -->
+    <span id="seconds">00</span>: <!-- This span element will display the seconds -->
+    <span id="milliseconds">00</span> <!-- This span element will display the milliseconds -->
+  </div>
+  <!-- Create a buttons element that will contain the start, stop, and reset buttons -->
+  <div class="buttons">
+    <!-- Create a start button that will start the stopwatch -->
+    <button class="button start" id="start">Start</button>
+    <!-- Create a stop button that will stop the stopwatch -->
+    <button class="button stop" id="stop">Stop</button>
+    <!-- Create a reset button that will reset the stopwatch -->
+    <button class="button reset" id="reset">Reset</button>
+  </div>
+</div>
+
+<!-- Add a script tag to include the JavaScript code -->
+<script>
+// Declare some variables to store the references to the HTML elements
+var start = document.getElementById("start"); // Get the start button element by its id
+var stop = document.getElementById("stop"); // Get the stop button element by its id
+var reset = document.getElementById("reset"); // Get the reset button element by its id
+var hours = document.getElementById("hours"); // Get the hours span element by its id
+var minutes = document.getElementById("minutes"); // Get the minutes span element by its id
+var seconds = document.getElementById("seconds"); // Get the seconds span element by its id
+var milliseconds = document.getElementById("milliseconds"); // Get the milliseconds span element by its id
+
+// Declare some variables to store the initial values of the time units
+var h = 0; // Set the initial value of hours to zero
+var m = 0; // Set the initial value of minutes to zero
+var s = 0; // Set the initial value of seconds to zero
+var ms = 0; // Set the initial value of milliseconds to zero
+
+// Declare a variable to store the reference to the setInterval function
+var interval;
+
+// Define a function to start the stopwatch
+function startTimer() {
+  // Increment the milliseconds by 10
+  ms += 10;
+
+  // If the milliseconds reach 1000, increment the seconds and reset the milliseconds
+  if (ms == 1000) {
+    s++;
+    ms = 0;
+  }
+
+  // If the seconds reach 60, increment the minutes and reset the seconds
+  if (s == 60) {
+    m++;
+    s = 0;
+  }
+
+  // If the minutes reach 60, increment the hours and reset the minutes
+  if (m == 60) {
+    h++;
+    m = 0;
+  }
+
+  // Update the time display with the new values
+  // Use the ternary operator to add a leading zero if the value is less than 10
+  hours.innerHTML = h < 10 ? "0" + h : h;
+  minutes.innerHTML = m < 10 ? "0" + m : m;
+  seconds.innerHTML = s < 10 ? "0" + s : s;
+  milliseconds.innerHTML = ms < 10 ? "0" + ms : ms;
+}
+
+// Add an event listener to the start button to trigger the startTimer function
+start.addEventListener("click", function() {
+  // Clear any existing interval to avoid multiple timers
+  clearInterval(interval);
+  // Set the interval to call the startTimer function every 10 milliseconds
+  interval = setInterval(startTimer, 10);
+});
+function stopTimer() {
+  
+  clearInterval(interval);
+}
+
+
+stop.addEventListener("click", function() {
+  stopTimer();
+});
+
+
+function resetTimer() {
+ 
+  clearInterval(interval);
+  
+  h = 0;
+  m = 0;
+  s = 0;
+  ms = 0;
+ 
+  hours.innerHTML = "00";
+  minutes.innerHTML = "00";
+  seconds.innerHTML = "00";
+  milliseconds.innerHTML = "00";
+}
+
+reset.addEventListener("click", function() {
+  resetTimer();
+});
+</script>
+</body>
+</html>
